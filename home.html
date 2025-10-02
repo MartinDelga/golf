@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Topgolf Chile — Diversión para todos</title>
+  <meta name="description" content="Topgolf en Chile: golf, comida y diversión para todos. Reserva tu experiencia, descubre nuestro menú y organiza tu evento." />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root{
+      --bg:#ffffff; --card:#f8f9fa; --muted:#6c757d; --text:#212529; --brand:#1e3a8a; --brand-2:#3b82f6;
+      --accent:#f59e0b; --radius:12px; --shadow:0 4px 12px rgba(0,0,0,0.08);
+      --border:1px solid rgba(0,0,0,0.08);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+    
+    /* HEADER */
+    header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid rgba(0,0,0,0.05)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;gap:10px;align-items:center;font-weight:800;letter-spacing:.3px;color:var(--brand)}
+    .brand__logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:var(--shadow)}
+    nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0}
+    nav a{padding:8px 12px;border-radius:10px;opacity:.8;transition:all 0.2s ease;font-weight:500}
+    nav a:hover{background:rgba(30,58,138,0.05);opacity:1;color:var(--brand)}
+    .cta{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:white;padding:10px 16px;border-radius:12px;font-weight:700;transition:all 0.3s ease}
+    .cta:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(30,58,138,0.3)}
+
+    /* HERO */
+    .hero{position:relative;min-height:78vh;display:grid;place-items:center;overflow:hidden;border-bottom:1px solid rgba(0,0,0,0.05)}
+    .hero video,.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.7)}
+    .hero__content{position:relative;z-index:1;text-align:center;padding:60px 20px;color:white}
+    .badge{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);font-size:12px;color:rgba(255,255,255,.9)}
+    .hero h1{font-size:clamp(32px,6vw,64px);margin:16px 0 10px;line-height:1.05;text-shadow:0 2px 10px rgba(0,0,0,0.2)}
+    .hero p{max-width:720px;margin:0 auto 22px;color:rgba(255,255,255,.9);text-shadow:0 1px 5px rgba(0,0,0,0.2)}
+    .hero .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+    /* SECTIONS */
+    section{padding:64px 0}
+    .section__title{font-size:clamp(24px,3.5vw,40px);margin:0 0 12px;color:var(--brand)}
+    .section__desc{color:var(--muted);margin:0 0 28px;max-width:740px}
+
+    /* EXPERIENCIA GRID */
+    .grid{display:grid;gap:18px}
+    .grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card{background:var(--card);border:var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:transform 0.3s ease, box-shadow 0.3s ease}
+    .card:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(0,0,0,0.12)}
+    .card__media{aspect-ratio:16/10;background:#e9ecef}
+    .card__body{padding:16px}
+    .eyebrow{font-size:12px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase}
+    .card h3{margin:6px 0 6px;font-size:18px}
+    .pill{display:inline-block;margin-top:6px;font-size:12px;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,.05);color:var(--muted);transition:all 0.2s ease}
+    .pill:hover{background:rgba(30,58,138,0.1);color:var(--brand)}
+
+    /* RESERVAS QUICK */
+    .quick{display:grid;gap:12px;grid-template-columns:1.2fr 1fr}
+    .quick form{display:grid;gap:12px;grid-template-columns:repeat(4,1fr)}
+    .quick input,.quick select{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(0,0,0,0.1);background:#ffffff;color:var(--text);transition:border 0.3s ease}
+    .quick input:focus,.quick select:focus{border-color:var(--brand);outline:none}
+    .quick button{grid-column:span 1}
+
+    /* MENÚ */
+    .menu{display:grid;gap:18px;grid-template-columns:repeat(3,minmax(0,1fr))}
+    .menu__item{padding:16px;border-radius:16px;background:var(--card);border:var(--border);transition:transform 0.3s ease, box-shadow 0.3s ease}
+    .menu__item:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.08)}
+    .menu__item h4{margin:6px 0}
+    .price{opacity:.8;color:var(--brand);font-weight:600}
+
+    /* EVENTOS */
+    .events{display:grid;gap:18px;grid-template-columns:repeat(3,minmax(0,1fr))}
+    .event{border-radius:var(--radius);overflow:hidden;border:var(--border);background:linear-gradient(180deg,rgba(255,255,255,1),rgba(248,249,250,1));transition:transform 0.3s ease, box-shadow 0.3s ease}
+    .event:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.08)}
+    .event__media{aspect-ratio:16/9}
+    .event__body{padding:14px}
+
+    /* TESTIMONIOS */
+    .carousel{position:relative;overflow:hidden;border-radius:var(--radius);border:var(--border);background:var(--card)}
+    .slides{display:flex;transition:transform .4s ease}
+    .slide{min-width:100%;padding:24px;background:var(--card)}
+    .dots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+    .dot{width:10px;height:10px;border-radius:999px;background:rgba(0,0,0,.2);border:none;cursor:pointer;transition:all 0.3s ease}
+    .dot[aria-current="true"]{background:linear-gradient(135deg,var(--brand),var(--brand-2));transform:scale(1.2)}
+
+    /* MAPA + CONTACTO */
+    .contact{display:grid;gap:18px;grid-template-columns:1.2fr 1fr}
+    .contact__card{padding:18px;border-radius:var(--radius);background:var(--card);border:var(--border)}
+    .contact form{display:grid;gap:12px}
+    .contact input,.contact textarea{padding:12px;border-radius:12px;border:1px solid rgba(0,0,0,0.1);background:#ffffff;color:var(--text);transition:border 0.3s ease}
+    .contact input:focus,.contact textarea:focus{border-color:var(--brand);outline:none}
+    .contact button{justify-self:start}
+
+    /* FOOTER */
+    footer{border-top:1px solid rgba(0,0,0,0.05);padding:28px 0;color:var(--muted)}
+
+    /* CALENDARIO MEJORADO - ESTILO CHROME */
+    .calendar-wrapper {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: var(--border);
+      max-width: 320px;
+      margin: 0 auto;
+    }
+    
+    .calendar {
+      width: 100%;
+      font-size: 14px;
+      background: white;
+    }
+    
+    .cal__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: var(--brand);
+      color: white;
+    }
+    
+    .cal__nav {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .cal__btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .cal__btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    
+    .cal__title {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    
+    .cal__grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      padding: 16px;
+      gap: 4px;
+    }
+    
+    .cal__dow {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      padding: 8px 0;
+      font-weight: 500;
+    }
+    
+    .cal__day {
+      aspect-ratio: 1/1;
+      border: none;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      background: transparent;
+      font-weight: 400;
+      transition: all 0.2s ease;
+      font-size: 14px;
+    }
+    
+    .cal__day[aria-disabled="true"] {
+      opacity: .35;
+      pointer-events: none;
+      color: var(--muted);
+    }
+    
+    .cal__day:not([aria-disabled="true"]):hover {
+      background: rgba(30,58,138,0.1);
+      color: var(--brand);
+    }
+    
+    .cal__day[aria-selected="true"] {
+      background: var(--brand);
+      color: white;
+      font-weight: 500;
+    }
+    
+    .cal__day.today {
+      background: rgba(30,58,138,0.1);
+      color: var(--brand);
+      font-weight: 500;
+    }
+    
+    .cal__legend {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 0 16px 16px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .cal__legend span {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: #f8f9fa;
+    }
+    
+    .cal__legend .sel {
+      background: var(--brand);
+      border: none;
+    }
+    
+    .quick-cal {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+    
+    @media (max-width: 768px) {
+      .quick-cal {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width:1024px){
+      .grid--3,.menu,.events{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .quick{grid-template-columns:1fr}
+      .quick form{grid-template-columns:repeat(2,1fr)}
+      .contact{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      nav ul{display:none}
+      .grid--3,.menu,.events{grid-template-columns:1fr}
+      .quick form{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#">
+        <span class="brand__logo" aria-hidden="true"></span>
+        <span>Topgolf Chile</span>
+      </a>
+      <nav aria-label="Principal">
+        <ul>
+          <li><a href="#experiencia">Experiencia</a></li>
+          <li><a href="#reservas">Reservas</a></li>
+          <li><a href="#menu">Gastronomía</a></li>
+          <li><a href="#eventos">Eventos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      <a class="cta" href="#reservas">Reservar</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero">
+    <!-- Reemplaza con tu video o imagen -->
+    <!-- VIDEO DE REFERENCIA: assets/hero.mp4 | POSTER: assets/hero-poster.jpg -->
+    <video src="assets/hero.mp4" poster="assets/hero-poster.jpg" autoplay muted loop playsinline></video>
+    <!-- Alternativa si no usas video: <img src="assets/hero-bg.jpg" alt="Jugadores disfrutando Topgolf de noche"/> -->
+    <div class="hero__content container">
+      <span class="badge">Golf • Comida • Música</span>
+      <h1>Golf y diversión para todos</h1>
+      <p>Vive la experiencia Topgolf en Chile: tecnología de juego, coctelería y gastronomía para amigos, familias y empresas. No necesitas experiencia previa.</p>
+      <div class="actions">
+        <a class="cta" href="#reservas">Reservar ahora</a>
+        <a class="pill" href="#experiencia">Ver experiencia</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCIA -->
+  <section id="experiencia">
+    <div class="container">
+      <h2 class="section__title">La experiencia Topgolf</h2>
+      <p class="section__desc">Instalaciones modernas, bahías climatizadas y juegos con sensores para apuntar a dianas luminosas. Ideal para principiantes y jugadores expertos.</p>
+      <div class="grid grid--3">
+        <article class="card">
+          <img class="card__media" src="assets/experiencia-1.jpg" alt="Bahías de juego con tecnología" />
+          <div class="card__body">
+            <span class="eyebrow">Tecnología</span>
+            <h3>Bahías con rastreo de tiros</h3>
+            <p>Seguimiento de pelota y puntajes en tiempo real para juegos individuales o por equipos.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card__media" src="assets/experiencia-2.jpg" alt="Grupo de amigos disfrutando" />
+          <div class="card__body">
+            <span class="eyebrow">Para todos</span>
+            <h3>Diversión sin experiencia previa</h3>
+            <p>Reglas simples y juegos variados para todas las edades.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card__media" src="assets/experiencia-3.jpg" alt="Ambiente nocturno con luces" />
+          <div class="card__body">
+            <span class="eyebrow">Ambiente</span>
+            <h3>Noches con luces y música</h3>
+            <p>Iluminación espectacular y buena música para un plan distinto en Santiago.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVAS RÁPIDAS (con calendario) -->
+  <section id="reservas">
+    <div class="container">
+      <h2 class="section__title">Reserva tu bahía</h2>
+      <p class="section__desc">Elige una fecha en el calendario y completa tus datos. Confirmación inmediata.</p>
+
+      <div class="quick-cal">
+        <!-- Calendario -->
+        <div class="calendar-wrapper">
+          <div class="calendar" aria-label="Calendario de reservas" id="calendar">
+            <div class="cal__header">
+              <div class="cal__nav">
+                <button class="cal__btn" type="button" id="prevMonth" aria-label="Mes anterior">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+              </div>
+              <div class="cal__title" id="calMonth"></div>
+              <div class="cal__nav">
+                <button class="cal__btn" type="button" id="nextMonth" aria-label="Mes siguiente">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+            <div class="cal__grid" role="grid" aria-labelledby="calMonth">
+              <div class="cal__dow">Lun</div>
+              <div class="cal__dow">Mar</div>
+              <div class="cal__dow">Mié</div>
+              <div class="cal__dow">Jue</div>
+              <div class="cal__dow">Vie</div>
+              <div class="cal__dow">Sáb</div>
+              <div class="cal__dow">Dom</div>
+              <div id="calDays" class="cal__days" style="display:contents"></div>
+            </div>
+            <div class="cal__legend">
+              <span class="sel"></span> Fecha seleccionada
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulario -->
+        <div class="card">
+          <div class="card__body">
+            <form action="#" method="post" aria-label="Formulario de reservas" id="bookingForm">
+              <div style="display:grid;gap:12px;grid-template-columns:repeat(2,1fr)">
+                <div>
+                  <label class="eyebrow">Fecha</label>
+                  <div id="selectedDateText" style="font-weight:700;margin-top:6px;color:var(--brand)">—</div>
+                  <input type="hidden" name="fecha" id="fecha" />
+                </div>
+                <div>
+                  <label class="eyebrow" for="hora">Hora</label>
+                  <select id="hora" name="hora" aria-label="Hora">
+                    <option value="18:00">18:00</option>
+                    <option value="19:00" selected>19:00</option>
+                    <option value="20:00">20:00</option>
+                    <option value="21:00">21:00</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="eyebrow" for="personas">Personas</label>
+                  <select id="personas" name="personas" aria-label="Personas">
+                    <option value="2">2</option>
+                    <option value="4" selected>4</option>
+                    <option value="6">6</option>
+                    <option value="8">8</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="eyebrow" for="sucursal">Sucursal</label>
+                  <select id="sucursal" name="sucursal" aria-label="Sucursal">
+                    <option value="vitacura">Vitacura</option>
+                    <option value="la_florida">La Florida</option>
+                  </select>
+                </div>
+              </div>
+              <button class="cta" type="submit" style="margin-top:14px">Buscar disponibilidad</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Beneficios -->
+      <div class="grid grid--3" style="margin-top:18px">
+        <div class="card"><img class="card__media" src="assets/empresas.jpg" alt="Evento corporativo" /><div class="card__body"><h3>Eventos corporativos</h3><p>Salas privadas, packs de comida y host dedicado para tu equipo.</p></div></div>
+        <div class="card"><img class="card__media" src="assets/cumpleanos.jpg" alt="Cumpleaños" /><div class="card__body"><h3>Cumpleaños y celebraciones</h3><p>Paquetes para grupos con decoración y torta opcional.</p></div></div>
+        <div class="card"><img class="card__media" src="assets/membresias.jpg" alt="Tarjeta de membresía" /><div class="card__body"><h3>Membresías</h3><p>Descuentos, horas preferentes y eventos exclusivos para socios.</p></div></div>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        const calDays = document.getElementById('calDays');
+        const calMonth = document.getElementById('calMonth');
+        const prevBtn = document.getElementById('prevMonth');
+        const nextBtn = document.getElementById('nextMonth');
+        const fechaInput = document.getElementById('fecha');
+        const selText = document.getElementById('selectedDateText');
+
+        const locale = 'es-CL';
+        let today = new Date();
+        today.setHours(0,0,0,0);
+        let view = new Date(today.getFullYear(), today.getMonth(), 1);
+        let selected = null;
+
+        function pad(n){return String(n).padStart(2,'0');}
+        function fmtISO(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
+        function fmtHuman(d){return d.toLocaleDateString(locale,{weekday:'long', day:'2-digit', month:'long', year:'numeric'})}
+
+        function render(){
+          // Título
+          calMonth.textContent = view.toLocaleDateString(locale,{month:'long', year:'numeric'});
+          // Limpiar y dibujar
+          calDays.innerHTML='';
+          const firstDow = (view.getDay()+6)%7; // L=0..D=6
+          const first = new Date(view);
+          first.setDate(1);
+          const last = new Date(view.getFullYear(), view.getMonth()+1, 0);
+
+          // Relleno de huecos antes del día 1
+          for(let i=0;i<firstDow;i++){
+            const ghost = document.createElement('div');
+            ghost.className = 'cal__day';
+            ghost.setAttribute('aria-disabled','true');
+            calDays.appendChild(ghost);
+          }
+          // Días del mes
+          for(let d=1; d<=last.getDate(); d++){
+            const date = new Date(view.getFullYear(), view.getMonth(), d);
+            const btn = document.createElement('button');
+            btn.type='button';
+            btn.className='cal__day';
+            btn.textContent = d;
+            
+            // Marcar si es hoy
+            if (date.toDateString() === today.toDateString()) {
+              btn.classList.add('today');
+            }
+            
+            const disabled = date < today; // regla simple: no fechas pasadas
+            if(disabled){ btn.setAttribute('aria-disabled','true'); }
+            if(selected && fmtISO(date)===fmtISO(selected)) btn.setAttribute('aria-selected','true');
+            btn.addEventListener('click',()=>{
+              selected = date;
+              fechaInput.value = fmtISO(date);
+              selText.textContent = fmtHuman(date);
+              // actualizar selección visual
+              [...calDays.querySelectorAll('.cal__day[aria-selected="true"]')].forEach(el=>el.removeAttribute('aria-selected'));
+              btn.setAttribute('aria-selected','true');
+            });
+            calDays.appendChild(btn);
+          }
+        }
+
+        prevBtn.addEventListener('click',()=>{ view.setMonth(view.getMonth()-1); render(); });
+        nextBtn.addEventListener('click',()=>{ view.setMonth(view.getMonth()+1); render(); });
+
+        // Iniciar
+        render();
+      })();
+    </script>
+  </section>
+
+  <!-- MENÚ / GASTRONOMÍA -->
+  <section id="menu">
+    <div class="container">
+      <h2 class="section__title">Gastronomía y coctelería</h2>
+      <p class="section__desc">Platos para compartir, opciones chilenas con giro internacional y cocteles de autor.</p>
+      <div class="menu">
+        <div class="menu__item">
+          <img src="assets/menu-burger.jpg" alt="Burger especial" />
+          <h4>Burger Topgolf</h4>
+          <p class="price">$9.900</p>
+          <p>Carne, queso cheddar, cebolla caramelizada y salsa de la casa.</p>
+        </div>
+        <div class="menu__item">
+          <img src="assets/menu-papas.jpg" alt="Papas crujientes" />
+          <h4>Papas crujientes</h4>
+          <p class="price">$5.900</p>
+          <p>Con mezcla de especias y alioli de merkén.</p>
+        </div>
+        <div class="menu__item">
+          <img src="assets/menu-pisco.jpg" alt="Pisco sour de autor" />
+          <h4>Pisco Sour de la casa</h4>
+          <p class="price">$6.500</p>
+          <p>Clásico chileno con un twist cítrico.</p>
+        </div>
+      </div>
+      <p style="margin-top:12px"><a class="pill" href="#">Ver menú completo (PDF)</a></p>
+    </div>
+  </section>
+
+  <!-- EVENTOS -->
+  <section id="eventos">
+    <div class="container">
+      <h2 class="section__title">Próximos eventos</h2>
+      <p class="section__desc">Torneos, noches temáticas y música en vivo.</p>
+      <div class="events">
+        <article class="event">
+          <img class="event__media" src="assets/evento-noches.jpg" alt="Noches con luces" />
+          <div class="event__body"><h3>Noches de luces LED</h3><p>Todos los viernes desde las 20:00</p></div>
+        </article>
+        <article class="event">
+          <img class="event__media" src="assets/evento-torneo.jpg" alt="Torneo Topgolf" />
+          <div class="event__body"><h3>Torneo Topgolf</h3><p>Próximo: 15 de noviembre</p></div>
+        </article>
+        <article class="event">
+          <img class="event__media" src="assets/evento-live.jpg" alt="Música en vivo" />
+          <div class="event__body"><h3>Música en vivo</h3><p>Sábados seleccionados</p></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS / CAROUSEL simple sin dependencias -->
+  <section aria-label="Testimonios">
+    <div class="container">
+      <div class="carousel" id="carousel">
+        <div class="slides" id="slides">
+          <div class="slide"><p>“Planazo con amigos, el juego es adictivo y la comida excelente.” — <strong>Pía</strong></p></div>
+          <div class="slide"><p>“Fui con la empresa, super organizado y entretenido.” — <strong>Matías</strong></p></div>
+          <div class="slide"><p>“No sabía nada de golf y lo pasé increíble.” — <strong>Camila</strong></p></div>
+        </div>
+      </div>
+      <div class="dots" role="tablist" aria-label="Controles de testimonios">
+        <button class="dot" aria-current="true" aria-controls="slide-1"></button>
+        <button class="dot" aria-controls="slide-2"></button>
+        <button class="dot" aria-controls="slide-3"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAPA + CONTACTO -->
+  <section id="contacto">
+    <div class="container contact">
+      <div class="contact__card">
+        <h2 class="section__title" style="margin-bottom:8px">Dónde estamos</h2>
+        <p class="section__desc">Encuéntranos en Santiago. Estacionamiento y acceso a transporte público.</p>
+        <!-- Reemplaza el src del iframe por tu mapa embebido -->
+        <!-- MAPA DE REFERENCIA: assets/mapa.jpg (si no usas embed) -->
+        <img src="assets/mapa.jpg" alt="Mapa de ubicación" />
+        <!-- Ejemplo con iframe (Google Maps):
+        <iframe title="Mapa Topgolf Chile" src="https://www.google.com/maps/embed?pb=TU_EMBED" width="100%" height="360" style="border:0;border-radius:16px" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+      </div>
+      <div class="contact__card">
+        <h2 class="section__title" style="margin-bottom:8px">Contacto</h2>
+        <form action="#" method="post" aria-label="Formulario de contacto">
+          <input type="text" name="nombre" placeholder="Nombre" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <textarea name="mensaje" rows="4" placeholder="Cuéntanos qué necesitas"></textarea>
+          <button class="cta" type="submit">Enviar</button>
+        </form>
+        <p class="section__desc" style="margin-top:10px">También puedes escribirnos a <a href="mailto:contacto@topgolf.cl">contacto@topgolf.cl</a> o llamarnos al <a href="tel:+56212345678">+56 2 1234 5678</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap">
+      <p>© <span id="year"></span> Topgolf Chile. Todos los derechos reservados.</p>
+      <p><a href="#">Términos</a> • <a href="#">Privacidad</a> • <a href="#">Preguntas frecuentes</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Año dinámico
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Carousel básico
+    const slides = document.getElementById('slides');
+    const dots = [...document.querySelectorAll('.dot')];
+    let idx = 0;
+    function go(i){ idx = i; slides.style.transform = `translateX(-${i*100}%)`; dots.forEach((d,k)=>d.setAttribute('aria-current', k===i ? 'true' : 'false')); }
+    dots.forEach((d,i)=>d.addEventListener('click',()=>go(i)));
+    setInterval(()=>go((idx+1)%dots.length), 5000);
+  </script>
+</body>
+</html>
